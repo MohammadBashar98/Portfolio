@@ -316,14 +316,17 @@
       width: 100%;
       height: 100%;
       position: relative;
+      overflow: hidden;
     }
     .carousel-slides {
       display: flex;
       width: 100%;
       height: 100%;
       transition: transform 0.35s ease;
+      flex-wrap: nowrap;
     }
     .carousel-slide {
+      width: 100%;
       min-width: 100%;
       height: 100%;
       display: flex;
@@ -584,7 +587,7 @@
 
       const goTo = (idx) => {
         current = (idx + total) % total;
-        slides.style.transform = `translateX(-${current * 100}%)`;
+        slides.style.transform = `translateX(-${current * slides.clientWidth}px)`;
         dots.forEach((d, i) => d.classList.toggle('active', i === current));
       };
 
