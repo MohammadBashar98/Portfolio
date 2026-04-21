@@ -252,33 +252,6 @@
       transform: translate(3px, -3px);
       color: var(--text-primary);
     }
-    .card-actions {
-      display: flex;
-      margin-top: 0.75rem;
-    }
-    .btn-action {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.73rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      text-align: center;
-      text-decoration: none;
-      padding: 0.45rem 0.9rem;
-      border-radius: 2px;
-      border: 1px solid var(--border);
-      transition: all 0.18s;
-      cursor: pointer;
-    }
-    .btn-live {
-      background: transparent;
-      color: var(--text-secondary);
-    }
-    .btn-live:hover {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
     .card-title {
       font-family: 'Playfair Display', serif;
       font-size: 1.2rem;
@@ -308,28 +281,6 @@
       border-radius: 1px;
     }
 
-    /* ── CAROUSEL ── */
-    .card-thumb { position: relative; overflow: hidden; }
-    .carousel { width: 100%; height: 100%; position: relative; }
-    .carousel-slides { display: flex; width: 100%; height: 100%; transition: transform 0.35s ease; }
-    .carousel-slide { min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .slide-fallback { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-size: 2rem; }
-    .carousel-btn {
-      position: absolute; top: 50%; transform: translateY(-50%); z-index: 10;
-      background: rgba(255,255,255,0.85); border: none; border-radius: 50%;
-      width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; font-size: 0.7rem; color: var(--text-primary);
-      opacity: 0; transition: opacity 0.2s, background 0.2s; padding: 0;
-    }
-    .card-thumb:hover .carousel-btn { opacity: 1; }
-    .carousel-btn:hover { background: #fff; }
-    .carousel-btn.prev { left: 8px; }
-    .carousel-btn.next { right: 8px; }
-    .carousel-dots { position: absolute; bottom: 7px; left: 50%; transform: translateX(-50%); display: flex; gap: 4px; z-index: 10; }
-    .carousel-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); transition: background 0.2s; cursor: pointer; }
-    .carousel-dot.active { background: #fff; }
-
     /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
@@ -355,6 +306,90 @@
       transition: color 0.2s;
     }
     .footer-links a:hover { color: var(--text-primary); }
+
+    /* ── CAROUSEL ── */
+    .card-thumb {
+      position: relative;
+      overflow: hidden;
+    }
+    .carousel {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    .carousel-slides {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.35s ease;
+    }
+    .carousel-slide {
+      min-width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .carousel-slide .slide-fallback {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      font-size: 2rem;
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      background: rgba(255,255,255,0.85);
+      border: none;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.7rem;
+      color: var(--text-primary);
+      opacity: 0;
+      transition: opacity 0.2s, background 0.2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .card-thumb:hover .carousel-btn { opacity: 1; }
+    .carousel-btn:hover { background: #fff; }
+    .carousel-btn.prev { left: 8px; }
+    .carousel-btn.next { right: 8px; }
+    .carousel-dots {
+      position: absolute;
+      bottom: 7px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 4px;
+      z-index: 10;
+    }
+    .carousel-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .carousel-dot.active { background: #fff; }
 
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
@@ -407,14 +442,14 @@
     <!--
       PROJECT CARD TEMPLATE
       ─────────────────────
-      - The card itself links to the project detail page
-      - data-images / data-fallback control the carousel
-      - btn-live opens the live project URL (stops card click from firing)
+      To add images to the carousel, set data-images on .card-thumb:
+        data-images='["img1.png","img2.png","img3.png"]'
+      If no images are provided, the emoji fallback is shown.
       Duplicate this block for each project.
     -->
-    <a class="card" href="projects/project-one.html" data-category="web-app" style="animation-delay: 0.1s">
+    <a class="card" href="https://your-project-url.com" target="_blank" data-category="web-app" style="animation-delay: 0.1s">
       <div class="card-thumb" style="background: #e8e4dc;"
-           data-images='[]'
+           data-images='["https://your-project-url.com/screenshot1.png","https://your-project-url.com/screenshot2.png"]'
            data-fallback="🌐">
       </div>
       <div class="card-body">
@@ -429,16 +464,12 @@
           <span class="tag">Node.js</span>
           <span class="tag">API</span>
         </div>
-        <div class="card-actions">
-          <a class="btn-action btn-live" href="https://your-project-url.com" target="_blank"
-             onclick="event.stopPropagation()">View Live ↗</a>
-        </div>
       </div>
     </a>
 
-    <a class="card" href="projects/project-two.html" data-category="game" style="animation-delay: 0.2s">
+    <a class="card" href="https://your-project-url.com" target="_blank" data-category="game" style="animation-delay: 0.2s">
       <div class="card-thumb" style="background: #dde4dc;"
-           data-images='[]'
+           data-images='["https://your-project-url.com/screenshot1.png"]'
            data-fallback="🎮">
       </div>
       <div class="card-body">
@@ -452,16 +483,12 @@
           <span class="tag">JavaScript</span>
           <span class="tag">Canvas</span>
         </div>
-        <div class="card-actions">
-          <a class="btn-action btn-live" href="https://your-project-url.com" target="_blank"
-             onclick="event.stopPropagation()">View Live ↗</a>
-        </div>
       </div>
     </a>
 
-    <a class="card" href="projects/project-three.html" data-category="design" style="animation-delay: 0.3s">
+    <a class="card" href="https://your-project-url.com" target="_blank" data-category="design" style="animation-delay: 0.3s">
       <div class="card-thumb" style="background: #e4dce4;"
-           data-images='[]'
+           data-images='["screenshots/project1-1.png", "screenshots/project1-2.png"]'
            data-fallback="🎨">
       </div>
       <div class="card-body">
@@ -475,14 +502,10 @@
           <span class="tag">Figma</span>
           <span class="tag">CSS</span>
         </div>
-        <div class="card-actions">
-          <a class="btn-action btn-live" href="https://your-project-url.com" target="_blank"
-             onclick="event.stopPropagation()">View Live ↗</a>
-        </div>
       </div>
     </a>
 
-    <a class="card" href="projects/project-four.html" data-category="other" style="animation-delay: 0.4s">
+    <a class="card" href="https://your-project-url.com" target="_blank" data-category="other" style="animation-delay: 0.4s">
       <div class="card-thumb" style="background: #dce0e4;"
            data-images='[]'
            data-fallback="⚡">
@@ -497,10 +520,6 @@
         <div class="card-tags">
           <span class="tag">Python</span>
           <span class="tag">Open Source</span>
-        </div>
-        <div class="card-actions">
-          <a class="btn-action btn-live" href="https://your-project-url.com" target="_blank"
-             onclick="event.stopPropagation()">View Live ↗</a>
         </div>
       </div>
     </a>
@@ -524,8 +543,10 @@
       let images = [];
       try { images = JSON.parse(raw || '[]'); } catch(e) {}
 
+      // Build carousel HTML
       const carousel = document.createElement('div');
       carousel.className = 'carousel';
+
       const slides = document.createElement('div');
       slides.className = 'carousel-slides';
 
@@ -535,21 +556,31 @@
         slide.className = 'carousel-slide';
         if (src) {
           const img = document.createElement('img');
-          img.src = src; img.alt = ''; img.draggable = false;
-          img.onerror = () => { img.remove(); const fb = document.createElement('div'); fb.className = 'slide-fallback'; fb.textContent = fallback; slide.appendChild(fb); };
+          img.src = src;
+          img.alt = '';
+          img.draggable = false;
+          // If image fails to load, show fallback
+          img.onerror = () => {
+            img.remove();
+            const fb = document.createElement('div');
+            fb.className = 'slide-fallback';
+            fb.textContent = fallback;
+            slide.appendChild(fb);
+          };
           slide.appendChild(img);
         } else {
           const fb = document.createElement('div');
-          fb.className = 'slide-fallback'; fb.textContent = fallback;
+          fb.className = 'slide-fallback';
+          fb.textContent = fallback;
           slide.appendChild(fb);
         }
         slides.appendChild(slide);
       });
 
       carousel.appendChild(slides);
+
       let current = 0;
       const total = items.length;
-      const dots = [];
 
       const goTo = (idx) => {
         current = (idx + total) % total;
@@ -557,27 +588,43 @@
         dots.forEach((d, i) => d.classList.toggle('active', i === current));
       };
 
+      // Auto-advance timer
       if (total > 1) {
         let timer = setInterval(() => goTo(current + 1), 4000);
         thumb.addEventListener('mouseenter', () => clearInterval(timer));
         thumb.addEventListener('mouseleave', () => { timer = setInterval(() => goTo(current + 1), 4000); });
+      }
 
+      // Arrows (only if more than 1 slide)
+      if (total > 1) {
         const prev = document.createElement('button');
-        prev.className = 'carousel-btn prev'; prev.innerHTML = '&#8592;'; prev.setAttribute('aria-label', 'Previous');
+        prev.className = 'carousel-btn prev';
+        prev.innerHTML = '&#8592;';
+        prev.setAttribute('aria-label', 'Previous image');
+
         const next = document.createElement('button');
-        next.className = 'carousel-btn next'; next.innerHTML = '&#8594;'; next.setAttribute('aria-label', 'Next');
+        next.className = 'carousel-btn next';
+        next.innerHTML = '&#8594;';
+        next.setAttribute('aria-label', 'Next image');
+
         prev.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); goTo(current - 1); });
         next.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); goTo(current + 1); });
+
         carousel.appendChild(prev);
         carousel.appendChild(next);
+      }
 
-        const dotsEl = document.createElement('div');
-        dotsEl.className = 'carousel-dots';
+      // Dots
+      const dotsEl = document.createElement('div');
+      dotsEl.className = 'carousel-dots';
+      const dots = [];
+      if (total > 1) {
         items.forEach((_, i) => {
           const dot = document.createElement('div');
           dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
           dot.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); goTo(i); });
-          dotsEl.appendChild(dot); dots.push(dot);
+          dotsEl.appendChild(dot);
+          dots.push(dot);
         });
         carousel.appendChild(dotsEl);
       }
