@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The True True Size — Mohammad Bashar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f3ef;
+      --surface: #ffffff;
+      --text-primary: #111110;
+      --text-secondary: #6b6a66;
+      --text-muted: #a09f9a;
+      --accent: #1a1a18;
+      --border: rgba(0,0,0,0.08);
+      --tag-bg: #eceae5;
+      --tag-text: #4a4945;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(245,243,239,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .nav-back {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text-primary); }
+
+    /* ── MAIN LAYOUT ── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 8rem 3rem 6rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.1s;
+    }
+
+    /* ── HEADER ── */
+    .project-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .project-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 600;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+    .project-summary {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      max-width: 600px;
+      margin-bottom: 2rem;
+    }
+
+    /* ── CTA BUTTONS ── */
+    .project-ctas {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      transition: all 0.18s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .btn-primary:hover { opacity: 0.8; }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-secondary);
+    }
+    .btn-secondary:hover { background: var(--tag-bg); color: var(--text-primary); }
+
+    /* ── DIVIDER ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── LIVE PREVIEW ── */
+    .live-preview {
+      margin-bottom: 4rem;
+    }
+    .iframe-wrapper {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border-radius: 3px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--tag-bg);
+      position: relative;
+    }
+    .iframe-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+    .iframe-caption {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.6rem;
+      text-align: center;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── DESCRIPTION ── */
+    .description {
+      margin-bottom: 4rem;
+    }
+    .description p {
+      font-size: 0.97rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .description p:last-child { margin-bottom: 0; }
+
+    /* ── FEATURES ── */
+    .features {
+      margin-bottom: 4rem;
+    }
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .feature-list li::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      margin-top: 0.55rem;
+      flex-shrink: 0;
+    }
+
+    /* ── TECH STACK ── */
+    .tech-stack {
+      margin-bottom: 4rem;
+    }
+    .tech-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .tech-tag {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      background: var(--surface);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.85rem;
+      border-radius: 2px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    footer p { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a {
+      font-size: 0.8rem; color: var(--text-muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text-primary); }
+
+    /* ── ANIMATION ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.5rem; }
+      main, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      main { padding-top: 6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="../index.html">Mohammad Bashar</a>
+    <a class="nav-back" href="../index.html">← Back to portfolio</a>
+  </nav>
+
+  <main>
+
+    <!-- ── PROJECT HEADER ── -->
+    <p class="project-eyebrow">Web App &nbsp;·&nbsp; 2025</p>
+    <h1 class="project-title">The True True Size</h1>
+    <p class="project-summary">
+      An interactive map that corrects the Mercator projection's infamous distortions —
+      letting you drag any country to any latitude and see its real size.
+    </p>
+
+    <div class="project-ctas">
+      <a class="btn btn-primary" href="https://mohammadbashar98.github.io/TheTrueTrueSize/truesize.html" target="_blank">View Live ↗</a>
+      <a class="btn btn-secondary" href="https://github.com/MohammadBashar98/TheTrueTrueSize" target="_blank">GitHub Repo</a>
+    </div>
+
+    <!-- ── LIVE PREVIEW ── -->
+    <div class="section-header">
+      <span class="section-label">Live Preview</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="live-preview">
+      <div class="iframe-wrapper">
+        <iframe
+          src="https://mohammadbashar98.github.io/TheTrueTrueSize/truesize.html"
+          title="The True True Size — live demo"
+          loading="lazy"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <p class="iframe-caption">Interactive — try dragging a country shape across the map.</p>
+    </div>
+
+    <!-- ── DESCRIPTION ── -->
+    <div class="section-header">
+      <span class="section-label">Overview</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="description">
+      <p>
+        Most people grow up with the Mercator projection burned into their mental model of the world.
+        It's the map on classroom walls, in textbooks, and as the default in many apps — but it
+        wildly exaggerates the size of countries near the poles. Greenland appears as large as
+        Africa; in reality Africa is about 14× bigger.
+      </p>
+      <p>
+        The True True Size lets you search for any country or territory, place its outline on the
+        map, and drag it freely across latitudes. As you move a shape, it redraws itself at the
+        correct projected scale for that position, so you can make direct, honest comparisons.
+        A live readout shows the Mercator scale factor, area inflation percentage, and your cursor's
+        latitude — turning a frustrating cartographic lie into an intuitive learning tool.
+      </p>
+    </div>
+
+    <!-- ── FEATURES ── -->
+    <div class="section-header">
+      <span class="section-label">Features</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="features">
+      <ul class="feature-list">
+        <li>Search and place any country or territory outline on the Mercator map</li>
+        <li>Drag shapes freely across latitudes — geometry redraws in real time to reflect true projected scale</li>
+        <li>Stack multiple countries simultaneously for side-by-side size comparisons</li>
+        <li>Live sidebar shows cursor latitude, Mercator scale factor, and area inflation percentage</li>
+        <li>Clean, distraction-free UI with a single-colour world basemap that keeps focus on the shapes</li>
+      </ul>
+    </div>
+
+    <!-- ── TECH STACK ── -->
+    <div class="section-header">
+      <span class="section-label">Tech Stack</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="tech-stack">
+      <div class="tech-grid">
+        <span class="tech-tag">HTML / CSS / JS</span>
+        <span class="tech-tag">D3.js</span>
+        <span class="tech-tag">GeoJSON</span>
+        <span class="tech-tag">Mercator Projection</span>
+        <span class="tech-tag">GitHub Pages</span>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2026 Mohammad Bashar</p>
+    <div class="footer-links">
+      <a href="https://github.com/MohammadBashar98" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/mohammad-bashar-78b3ba369" target="_blank">LinkedIn</a>
+      <a href="mailto:mohammadbashar005@gmail.com">Email</a>
+    </div>
+  </footer>
+
+</body>
+</html>
