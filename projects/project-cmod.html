@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crazy Mad Office Dude — Mohammad Bashar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f3ef;
+      --surface: #ffffff;
+      --text-primary: #111110;
+      --text-secondary: #6b6a66;
+      --text-muted: #a09f9a;
+      --accent: #1a1a18;
+      --border: rgba(0,0,0,0.08);
+      --tag-bg: #eceae5;
+      --tag-text: #4a4945;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(245,243,239,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .nav-back {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text-primary); }
+
+    /* ── MAIN LAYOUT ── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 8rem 3rem 6rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.1s;
+    }
+
+    /* ── HEADER ── */
+    .project-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .project-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 600;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+    .project-summary {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      max-width: 600px;
+      margin-bottom: 2rem;
+    }
+
+    /* ── CTA BUTTONS ── */
+    .project-ctas {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      transition: all 0.18s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .btn-primary:hover { opacity: 0.8; }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-secondary);
+    }
+    .btn-secondary:hover { background: var(--tag-bg); color: var(--text-primary); }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── SCREENSHOT GALLERY ── */
+    .gallery {
+      margin-bottom: 4rem;
+    }
+    .gallery-main {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border-radius: 3px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--tag-bg);
+      position: relative;
+      cursor: pointer;
+    }
+    .gallery-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.25s ease;
+    }
+    .gallery-main .placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      color: var(--text-muted);
+    }
+    .gallery-main .placeholder span {
+      font-size: 3rem;
+    }
+    .gallery-main .placeholder p {
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* nav arrows */
+    .gallery-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.85);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.15s;
+      z-index: 2;
+    }
+    .gallery-arrow:hover { background: #fff; }
+    .gallery-arrow.prev { left: 0.75rem; }
+    .gallery-arrow.next { right: 0.75rem; }
+    .gallery-arrow.hidden { display: none; }
+
+    /* dots */
+    .gallery-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+    .gallery-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      opacity: 0.4;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .gallery-dot.active { opacity: 1; background: var(--accent); }
+
+    /* thumbnails */
+    .gallery-thumbs {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .gallery-thumb {
+      width: 72px;
+      height: 48px;
+      border-radius: 2px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      opacity: 0.55;
+      transition: opacity 0.2s, border-color 0.2s;
+      flex-shrink: 0;
+    }
+    .gallery-thumb.active {
+      opacity: 1;
+      border-color: var(--accent);
+    }
+    .gallery-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .gallery-caption {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      text-align: center;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── DESCRIPTION ── */
+    .description {
+      margin-bottom: 4rem;
+    }
+    .description p {
+      font-size: 0.97rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .description p:last-child { margin-bottom: 0; }
+
+    /* ── FEATURES ── */
+    .features {
+      margin-bottom: 4rem;
+    }
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .feature-list li::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      margin-top: 0.55rem;
+      flex-shrink: 0;
+    }
+
+    /* ── TECH STACK ── */
+    .tech-stack {
+      margin-bottom: 4rem;
+    }
+    .tech-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .tech-tag {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      background: var(--surface);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.85rem;
+      border-radius: 2px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    footer p { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a {
+      font-size: 0.8rem; color: var(--text-muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text-primary); }
+
+    /* ── ANIMATION ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.5rem; }
+      main, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      main { padding-top: 6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="../index.html">Mohammad Bashar</a>
+    <a class="nav-back" href="../index.html">← Back to portfolio</a>
+  </nav>
+
+  <main>
+
+    <!-- ── PROJECT HEADER ── -->
+    <p class="project-eyebrow">Game &nbsp;·&nbsp; 2025</p>
+    <h1 class="project-title">Crazy Mad Office Dude</h1>
+    <p class="project-summary">
+      A Unity 6 recreation of the classic shooter from Alan Thorn's
+      <em>Pro Unity Game Development with C#</em> — modernised from the ground up
+      with current APIs, rendering, and project structure.
+    </p>
+
+    <div class="project-ctas">
+      <a class="btn btn-primary" href="https://github.com/MohammadBashar98/Unity-6-Implementation-of-CMOD/releases" target="_blank">Download ↓</a>
+      <a class="btn btn-secondary" href="https://github.com/MohammadBashar98/Unity-6-Implementation-of-CMOD" target="_blank">GitHub Repo</a>
+    </div>
+
+    <!-- ── SCREENSHOT GALLERY ── -->
+    <div class="section-header">
+      <span class="section-label">Screenshots</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="gallery">
+      <div class="gallery-main" id="galleryMain">
+        <!--
+          SCREENSHOTS — HOW TO ADD IMAGES
+          ─────────────────────────────────
+          Replace the placeholder div below with your actual images.
+          Each image should be an <img> tag inside .gallery-main.
+          Store screenshots in: project-images/CMOD/
+          Example structure:
+            <img src="../project-images/CMOD/screenshot1.png" alt="Gameplay screenshot 1" class="gallery-img active">
+            <img src="../project-images/CMOD/screenshot2.png" alt="Gameplay screenshot 2" class="gallery-img">
+            <img src="../project-images/CMOD/screenshot3.png" alt="Gameplay screenshot 3" class="gallery-img">
+          Then delete the placeholder div.
+          The JS below will handle arrows, dots, and thumbnails automatically.
+        -->
+        <div class="placeholder">
+          <span>🎮</span>
+          <p>Screenshots coming soon</p>
+        </div>
+      </div>
+      <div class="gallery-dots" id="galleryDots"></div>
+      <div class="gallery-thumbs" id="galleryThumbs"></div>
+      <p class="gallery-caption" id="galleryCaption"></p>
+    </div>
+
+    <!-- ── DESCRIPTION ── -->
+    <div class="section-header">
+      <span class="section-label">Overview</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="description">
+      <p>
+        <em>Pro Unity Game Development with C#</em> by Alan Thorn is a well-regarded
+        game development textbook, but its code targets a much older version of Unity.
+        Rather than follow along with outdated APIs and deprecated workflows, I rebuilt
+        the featured project — Crazy Mad Office Dude — entirely in Unity 6, adapting
+        every system to current standards along the way.
+      </p>
+      <p>
+        The game is a top-down shooter where the player navigates office-themed stages,
+        collecting all the money pickups to advance. Enemies patrol the environment and
+        the player must manage movement, shooting, and pickups while clearing each level.
+        The focus of the project was to work through the book's design decisions
+        critically, understanding why each system was built the way it was and how
+        those decisions translate — or don't — into Unity 6.
+      </p>
+    </div>
+
+    <!-- ── FEATURES ── -->
+    <div class="section-header">
+      <span class="section-label">Features</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="features">
+      <ul class="feature-list">
+        <li>Top-down shooter gameplay with money-collection win condition per stage</li>
+        <li>Full rebuild in Unity 6 — all deprecated APIs replaced with current equivalents</li>
+        <li>Based on Alan Thorn's <em>Pro Unity Game Development with C#</em>, adapted and modernised throughout</li>
+        <li>Enemy patrol and player combat systems implemented from scratch in C#</li>
+        <li>Stage progression flow with pickup tracking and level-clear logic</li>
+      </ul>
+    </div>
+
+    <!-- ── TECH STACK ── -->
+    <div class="section-header">
+      <span class="section-label">Tech Stack</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="tech-stack">
+      <div class="tech-grid">
+        <span class="tech-tag">Unity 6</span>
+        <span class="tech-tag">C#</span>
+        <span class="tech-tag">GitHub Releases</span>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2026 Mohammad Bashar</p>
+    <div class="footer-links">
+      <a href="https://github.com/MohammadBashar98" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/mohammad-bashar-78b3ba369" target="_blank">LinkedIn</a>
+      <a href="mailto:mohammadbashar005@gmail.com">Email</a>
+    </div>
+  </footer>
+
+  <script>
+    // ── GALLERY ──
+    // Reads all .gallery-img elements inside #galleryMain and builds
+    // arrows, dots, and thumbnails automatically.
+    // Add your <img class="gallery-img"> tags and this script does the rest.
+    (function () {
+      const main    = document.getElementById('galleryMain');
+      const dotsEl  = document.getElementById('galleryDots');
+      const thumbsEl = document.getElementById('galleryThumbs');
+      const caption = document.getElementById('galleryCaption');
+
+      const imgs = Array.from(main.querySelectorAll('.gallery-img'));
+      if (!imgs.length) return; // no images yet — placeholder stays
+
+      // Hide placeholder if it exists
+      const placeholder = main.querySelector('.placeholder');
+      if (placeholder) placeholder.remove();
+
+      // Style images
+      imgs.forEach((img, i) => {
+        img.style.cssText = `
+          position: absolute; inset: 0;
+          width: 100%; height: 100%;
+          object-fit: cover;
+          opacity: ${i === 0 ? 1 : 0};
+          transition: opacity 0.35s ease;
+          pointer-events: none;
+        `;
+      });
+      main.style.position = 'relative';
+
+      let current = 0;
+      const total = imgs.length;
+
+      const dots  = [];
+      const thumbs = [];
+
+      // Build dots
+      imgs.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => goTo(i));
+        dotsEl.appendChild(dot);
+        dots.push(dot);
+      });
+
+      // Build thumbnails
+      imgs.forEach((img, i) => {
+        const t = document.createElement('div');
+        t.className = 'gallery-thumb' + (i === 0 ? ' active' : '');
+        const tImg = document.createElement('img');
+        tImg.src = img.src;
+        tImg.alt = '';
+        tImg.draggable = false;
+        t.appendChild(tImg);
+        t.addEventListener('click', () => goTo(i));
+        thumbsEl.appendChild(t);
+        thumbs.push(t);
+      });
+
+      // Build arrows (only if more than 1 image)
+      if (total > 1) {
+        const prev = document.createElement('button');
+        prev.className = 'gallery-arrow prev';
+        prev.innerHTML = '&#8592;';
+        prev.setAttribute('aria-label', 'Previous screenshot');
+        prev.addEventListener('click', () => goTo(current - 1));
+
+        const next = document.createElement('button');
+        next.className = 'gallery-arrow next';
+        next.innerHTML = '&#8594;';
+        next.setAttribute('aria-label', 'Next screenshot');
+        next.addEventListener('click', () => goTo(current + 1));
+
+        main.appendChild(prev);
+        main.appendChild(next);
+      }
+
+      function goTo(idx) {
+        imgs[current].style.opacity = '0';
+        dots[current].classList.remove('active');
+        thumbs[current].classList.remove('active');
+
+        current = (idx + total) % total;
+
+        imgs[current].style.opacity = '1';
+        dots[current].classList.add('active');
+        thumbs[current].classList.add('active');
+        caption.textContent = `Screenshot ${current + 1} of ${total}`;
+      }
+
+      // Init caption
+      caption.textContent = `Screenshot 1 of ${total}`;
+
+      // Keyboard navigation
+      document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft')  goTo(current - 1);
+        if (e.key === 'ArrowRight') goTo(current + 1);
+      });
+    })();
+  </script>
+
+</body>
+</html>
