@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Uber Energy Drink — Mohammad Bashar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f3ef;
+      --surface: #ffffff;
+      --text-primary: #111110;
+      --text-secondary: #6b6a66;
+      --text-muted: #a09f9a;
+      --accent: #1a1a18;
+      --border: rgba(0,0,0,0.08);
+      --tag-bg: #eceae5;
+      --tag-text: #4a4945;
+      --red: #c0392b;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(245,243,239,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .nav-back {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text-primary); }
+
+    /* ── MAIN LAYOUT ── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 8rem 3rem 6rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.1s;
+    }
+
+    /* ── HEADER ── */
+    .project-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .project-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 600;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+    .project-summary {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      max-width: 600px;
+      margin-bottom: 2rem;
+    }
+
+    /* ── CTA BUTTONS ── */
+    .project-ctas {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      transition: all 0.18s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .btn-primary:hover { opacity: 0.8; }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-secondary);
+    }
+    .btn-secondary:hover { background: var(--tag-bg); color: var(--text-primary); }
+
+    /* ── DIVIDER ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── HERO BANNER ── */
+    .hero-banner {
+      width: 100%;
+      aspect-ratio: 21/9;
+      background: linear-gradient(135deg, #111 0%, #1a0000 50%, #2a0000 100%);
+      border-radius: 4px;
+      margin-bottom: 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(192,57,43,0.2);
+    }
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(192,57,43,0.15) 0%, transparent 70%);
+    }
+    .hero-banner-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 4vw, 2.8rem);
+      color: #fff;
+      letter-spacing: 0.08em;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-banner-text span {
+      color: var(--red);
+    }
+    .hero-banner-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-top: 0.5rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    /* ── SCREENSHOTS GALLERY ── */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 4rem;
+    }
+    .gallery-item {
+      aspect-ratio: 16/9;
+      background: var(--tag-bg);
+      border-radius: 3px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .gallery-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .gallery-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      color: var(--text-muted);
+      background: linear-gradient(135deg, #eceae5, #e0ddd7);
+    }
+    .gallery-placeholder span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 2px;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem; right: 1.5rem;
+      background: none; border: none;
+      color: #fff; font-size: 1.5rem;
+      cursor: pointer; opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .lightbox-close:hover { opacity: 1; }
+
+    /* ── DESCRIPTION ── */
+    .description {
+      margin-bottom: 4rem;
+    }
+    .description p {
+      font-size: 0.97rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .description p:last-child { margin-bottom: 0; }
+
+    /* ── FEATURES ── */
+    .features {
+      margin-bottom: 4rem;
+    }
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .feature-list li::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--red);
+      opacity: 0.6;
+      margin-top: 0.55rem;
+      flex-shrink: 0;
+    }
+
+    /* ── FLAVORS GRID ── */
+    .flavors {
+      margin-bottom: 4rem;
+    }
+    .flavors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0.75rem;
+    }
+    .flavor-card {
+      padding: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .flavor-emoji { font-size: 1.4rem; }
+    .flavor-name {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    .flavor-note {
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+
+    /* ── TECH STACK ── */
+    .tech-stack {
+      margin-bottom: 4rem;
+    }
+    .tech-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .tech-tag {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      background: var(--surface);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.85rem;
+      border-radius: 2px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    footer p { font-size: 0.8rem; color: var(--text-muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a {
+      font-size: 0.8rem; color: var(--text-muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text-primary); }
+
+    /* ── ANIMATION ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.5rem; }
+      main, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      main { padding-top: 6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="../index.html">Mohammad Bashar</a>
+    <a class="nav-back" href="../index.html">← Back to portfolio</a>
+  </nav>
+
+  <main>
+
+    <!-- ── PROJECT HEADER ── -->
+    <p class="project-eyebrow">Brand Website &nbsp;·&nbsp; 2025</p>
+    <h1 class="project-title">Uber Energy Drink</h1>
+    <p class="project-summary">
+      A premium energy drink brand website built to communicate power, performance, and identity —
+      featuring product showcases, flavor exploration, and a bold visual language rooted in black and red.
+    </p>
+
+    <div class="project-ctas">
+      <a class="btn btn-primary" href="https://uberenergydrink.com" target="_blank">View Live ↗</a>
+      <a class="btn btn-secondary" href="https://github.com/MohammadBashar98" target="_blank">GitHub Repo</a>
+    </div>
+
+    <!-- ── HERO BANNER ── -->
+    <div class="hero-banner">
+      <div class="hero-content">
+        <div class="hero-banner-text">UBER <span>ENERGY</span></div>
+        <div class="hero-banner-sub">Pure Energy · Maximum Focus · Dragon Spirit</div>
+      </div>
+    </div>
+
+    <!-- ── SCREENSHOTS ── -->
+    <div class="section-header">
+      <span class="section-label">Screenshots</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="gallery">
+      <div class="gallery-item" data-src="">
+        <div class="gallery-placeholder">🏠 <span>Homepage</span></div>
+         <img src="../screenshots/uber-energy/1.png" alt="Homepage" />
+      </div>
+      <div class="gallery-item" data-src="">
+        <div class="gallery-placeholder">🥤 <span>Products Page</span></div>
+         <img src="../screenshots/uber-energy/2.png" alt="Products Page" />
+      </div>
+      <div class="gallery-item" data-src="">
+        <div class="gallery-placeholder">📦 <span>Why US</span></div>
+         <img src="../screenshots/uber-energy/3.png" alt="Why US" />
+      </div>
+    </div>
+
+    <!-- ── DESCRIPTION ── -->
+    <div class="section-header">
+      <span class="section-label">Overview</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="description">
+      <p>
+        Uber Energy Drink is a premium energy beverage brand built around a bold identity — black and red
+        branding, a dragon emblem, and a clear message of performance and strength. The website was designed
+        to reflect that identity digitally, giving the brand a strong online presence that matches the energy
+        of the product itself.
+      </p>
+      <p>
+        The project involved designing a product-first experience where visitors can explore the full lineup
+        of flavors, understand the ingredients and nutritional profile, and find where to purchase. The visual
+        direction was guided entirely by the brand's existing language: dark backgrounds, bold red accents,
+        and confident typography that communicates power without clutter.
+      </p>
+      <p>
+        One of the key challenges was presenting multiple distinct product lines — from the flagship Dragon
+        edition to the Ginkgo Guarana Premium and the Coconut & Açaí Edition — in a way that felt cohesive
+        yet gave each flavor its own personality on screen.
+      </p>
+    </div>
+
+    <!-- ── FEATURES ── -->
+    <div class="section-header">
+      <span class="section-label">Features</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="features">
+      <ul class="feature-list">
+        <li>Full product showcase with individual pages for each flavor variant and edition</li>
+        <li>Ingredient transparency section — Taurine, 150mg Caffeine, Vitamins B2/B3/B5/B6/B12 displayed clearly</li>
+        <li>Bold hero section with brand positioning: "Pure Energy. Maximum Focus."</li>
+        <li>Mobile-responsive layout optimized for on-the-go browsing</li>
+        <li>Where-to-buy section linking to retail and online distribution channels</li>
+        <li>Brand story section communicating the meaning behind the dragon emblem and the name "Uber"</li>
+        <li>Social media integration connecting to the official Instagram and Facebook presence</li>
+      </ul>
+    </div>
+
+    <!-- ── FLAVORS ── -->
+    <div class="section-header">
+      <span class="section-label">Product Lineup</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="flavors">
+      <div class="flavors-grid">
+        <div class="flavor-card">
+          <div class="flavor-emoji">🐉</div>
+          <div class="flavor-name">Classic Dragon</div>
+          <div class="flavor-note">Bold & traditional — the original</div>
+        </div>
+        <div class="flavor-card">
+          <div class="flavor-emoji">🍎</div>
+          <div class="flavor-name">Apple Edition</div>
+          <div class="flavor-note">Fresh, crisp, smooth finish</div>
+        </div>
+        <div class="flavor-card">
+          <div class="flavor-emoji">🍍</div>
+          <div class="flavor-name">Pineapple Edition</div>
+          <div class="flavor-note">Tropical & vibrant</div>
+        </div>
+        <div class="flavor-card">
+          <div class="flavor-emoji">🫐</div>
+          <div class="flavor-name">Berry Edition</div>
+          <div class="flavor-note">Rich, fruity & well-balanced</div>
+        </div>
+        <div class="flavor-card">
+          <div class="flavor-emoji">🌿</div>
+          <div class="flavor-name">Ginkgo Guarana Premium</div>
+          <div class="flavor-note">80mg caffeine, non-alcoholic</div>
+        </div>
+        <div class="flavor-card">
+          <div class="flavor-emoji">🥥</div>
+          <div class="flavor-name">Coconut & Açaí Edition</div>
+          <div class="flavor-note">Exotic, refreshing, high in B-vitamins</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TECH STACK ── -->
+    <div class="section-header">
+      <span class="section-label">Tech Stack</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="tech-stack">
+      <div class="tech-grid">
+        <span class="tech-tag">HTML5</span>
+        <span class="tech-tag">CSS3</span>
+        <span class="tech-tag">JavaScript</span>
+        <span class="tech-tag">Responsive Design</span>
+        <span class="tech-tag">Google Fonts</span>
+        <span class="tech-tag">Brand Identity</span>
+        <span class="tech-tag">UI/UX Design</span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close">✕</button>
+    <img id="lightbox-img" src="" alt="Screenshot enlarged" />
+  </div>
+
+  <footer>
+    <p>© 2026 Mohammad Bashar</p>
+    <div class="footer-links">
+      <a href="https://github.com/MohammadBashar98" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/mohammad-bashar-78b3ba369" target="_blank">LinkedIn</a>
+      <a href="mailto:mohammadbashar005@gmail.com">Email</a>
+    </div>
+  </footer>
+
+  <script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const img = item.querySelector('img');
+        if (img) {
+          lightboxImg.src = img.src;
+          lightbox.classList.add('open');
+        }
+      });
+    });
+
+    document.getElementById('lightbox-close').addEventListener('click', () => {
+      lightbox.classList.remove('open');
+      lightboxImg.src = '';
+    });
+
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) {
+        lightbox.classList.remove('open');
+        lightboxImg.src = '';
+      }
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        lightbox.classList.remove('open');
+        lightboxImg.src = '';
+      }
+    });
+  </script>
+</body>
+</html>
